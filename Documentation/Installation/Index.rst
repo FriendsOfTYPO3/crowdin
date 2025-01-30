@@ -8,8 +8,10 @@ Installation
 
 ..  important::
 
-    You will need an account at Crowdin to get efficient utilisation of this
+    You will need `an account at Crowdin`_ to get efficient utilisation of this
     extension. An account gives you the role as translator per default.
+
+..  _an account at Crowdin: https://accounts.crowdin.com/register
 
 
 #.  Using composer
