@@ -29,6 +29,9 @@ the selector in the TYPO3 top bar.
 To be able to translate an extension, it needs to be enabled as a project on
 Crowdin.
 
+..  seealso::
+    :ref:`known-problems-where-extension-top-bar`
+
 
 Screenshots
 ===========

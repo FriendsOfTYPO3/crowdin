@@ -7,6 +7,8 @@ Known problems
 ==============
 
 
+..  _known-problems-where-extension-top-bar:
+
 Where is the extension in the TYPO3 top bar
 ===========================================
 
