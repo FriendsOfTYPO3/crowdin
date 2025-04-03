@@ -40,7 +40,16 @@
 			"dev-main": "3.0.x-dev"
 		},
 		"typo3/cms": {
+			"web-dir": ".Build/public",
 			"extension-key": "crowdin"
 		}
+	},
+	"config": {
+		"allow-plugins": {
+			"typo3/cms-composer-installers": true,
+			"typo3/class-alias-loader": true
+		},
+		"bin-dir": ".Build/bin",
+		"vendor-dir": ".Build/vendor"
 	}
 }
