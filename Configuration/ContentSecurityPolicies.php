@@ -43,6 +43,11 @@ return Map::fromEntries([
         ),
         new Mutation(
             MutationMode::Append,
+            Directive::FrameSrc,
+            new UriValue('https://accounts.crowdin.com')
+        ),
+        new Mutation(
+            MutationMode::Append,
             Directive::StyleSrc,
             new UriValue('https://fonts.googleapis.com')
         ),
