@@ -183,7 +183,13 @@ class CrowdinToolbarItem implements ToolbarItemInterface
         $labelsDirectory = Environment::getVarPath() . '/labels/t3';
 
         if (is_dir($labelsDirectory)) {
-            $compatibleExtensions = GeneralUtility::get_dirs($labelsDirectory);
+            $candidateExtensions = GeneralUtility::get_dirs($labelsDirectory);
+            // An extension is compatible with Crowdin if it has at least one label file in its labels directory
+            $compatibleExtensions = array_filter($candidateExtensions, function ($extension) use ($labelsDirectory) {
+                $languageDirectory = $labelsDirectory . '/' . $extension . '/Resources/Private/Language';
+                $languageFiles = GeneralUtility::getFilesInDir($languageDirectory, 'xlf');
+                return !empty($languageFiles);
+            });
 
             $listUtility = GeneralUtility::makeInstance(ListUtility::class);
             $availableExtensions = $listUtility->getAvailableExtensions();
