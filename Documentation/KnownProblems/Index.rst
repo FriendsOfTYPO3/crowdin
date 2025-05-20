@@ -42,7 +42,7 @@ Then click the settings icon:
 
 And finally choose another language from the list:
 
-..  figure:: /Images/crowdin-settings-languages.png
+..  figure:: /Images/crowdin-settings-language.png
     :class: with-shadow
     :alt: Crowdin Language Settings
     :width: 500px
