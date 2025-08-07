@@ -32,13 +32,11 @@ The ``enable`` command above writes the following information to
 
 ..  code-block:: php
 
-    $GLOBALS['TYPO3_CONF_VARS']
-        ['SYS']['localization']['locales']['user']['t3'] = 'Crowdin In-Context Localization';
-        ['SYS']['fluid']['namespaces'] => [
-                'f' => [
-                    'TYPO3\\CMS\\Fluid\\ViewHelpers',
-                    'TYPO3Fluid\\Fluid\\ViewHelpers',
-                    'FriendsOfTYPO3\\Crowdin\\ViewHelpers\\Override',
-                ],
-            ],
-        ];
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['localization']['locales']['user']['t3'] = 'Crowdin In-Context Localization';
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces'] = [
+        'f' => [
+            'TYPO3\\CMS\\Fluid\\ViewHelpers',
+            'TYPO3Fluid\\Fluid\\ViewHelpers',
+            'FriendsOfTYPO3\\Crowdin\\ViewHelpers\\Override',
+        ],
+    ];
