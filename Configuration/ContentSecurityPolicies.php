@@ -33,6 +33,11 @@ return Map::fromEntries([
         ),
         new Mutation(
             MutationMode::Append,
+            Directive::ImgSrc,
+            new UriValue('https://crowdin-static.cf-downloads.crowdin.com')
+        ),
+        new Mutation(
+            MutationMode::Append,
             Directive::StyleSrc,
             new UriValue('https://cdn.crowdin.com')
         ),
