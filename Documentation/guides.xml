@@ -15,8 +15,8 @@
              typo3-core-preferred="stable"
   />
   <project title="Crowdin"
-           release="3.1.1"
-           version="3.1"
+           release="4.0.0"
+           version="4.0"
            copyright="2019-2025"
   />
 </guides>
