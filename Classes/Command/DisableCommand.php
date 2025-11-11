@@ -9,15 +9,21 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class DisableCommand extends Command
+final class DisableCommand extends Command
 {
+    public function __construct(
+        private readonly Setup $setup,
+    ) {
+        parent::__construct();
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        GeneralUtility::makeInstance(Setup::class)->disable();
+        $this->setup->disable();
         $io = new SymfonyStyle($input, $output);
         $io->success('Crowdin disabled');
+
         return Command::SUCCESS;
     }
 }
