@@ -78,8 +78,8 @@ class TranslateViewHelper extends AbstractViewHelper
             // Straight resolving via core LanguageService in non-extbase context
             if (!str_starts_with($id, 'LLL:EXT:') && empty($default)) {
                 // Resolve "short key" without LLL:EXT: syntax given, if an extension name is given.
-                // @todo: We could consider to deprecate this case. It is mostly implemented for a more
-                //        smooth transition when (backend) controllers no longer feed an extbase request.
+                // @todo we could consider to deprecate this case. It is mostly implemented for a more
+                //       smooth transition when (backend) controllers no longer feed an extbase request.
                 if (empty($extensionName)) {
                     throw new \RuntimeException(
                         'ViewHelper f:translate in non-extbase context needs attribute "extensionName" to resolve'
@@ -114,7 +114,7 @@ class TranslateViewHelper extends AbstractViewHelper
             // and should be avoided in backend context!
             $value = static::translate($id, $extensionName, $translateArguments, $arguments['languageKey'], $arguments['alternativeLanguageKeys'] ?? []);
         } catch (\InvalidArgumentException $e) {
-            // @todo: Switch to more specific Exceptions here - for instance those thrown when a package was not found, see #95957
+            // @todo switch to more specific Exceptions here - for instance those thrown when a package was not found, see #95957
             $value = null;
         }
         if ($value === null) {

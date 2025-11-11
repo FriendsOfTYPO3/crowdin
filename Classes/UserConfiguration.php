@@ -39,7 +39,7 @@ class UserConfiguration
                 $this->crowdinIdentifier = $crowdinConfiguration[$extensionKey];
                 $this->extensionKey = $extensionKey;
             } else {
-                // TODO: log error?
+                // @todo log error?
                 $this->usedForCore = false;
                 $this->crowdinIdentifier = null;
                 $this->extensionKey = null;
