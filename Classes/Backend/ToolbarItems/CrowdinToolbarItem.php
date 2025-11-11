@@ -13,7 +13,6 @@ use TYPO3\CMS\Backend\Form\NodeFactory;
 use TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Http\JsonResponse;
-use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Page\JavaScriptModuleInstruction;
@@ -29,9 +28,8 @@ class CrowdinToolbarItem implements ToolbarItemInterface
 
     public function __construct(
         private readonly PageRenderer $pageRenderer,
-        private readonly IconFactory  $iconFactory
-    )
-    {
+        private readonly IconFactory $iconFactory
+    ) {
         $this->typo3Version = (new Typo3Version())->getMajorVersion();
 
         if ($this->typo3Version >= 12) {
@@ -138,7 +136,7 @@ class CrowdinToolbarItem implements ToolbarItemInterface
                     ],
                 ],
                 'itemFormElName' => $name,
-                'itemFormElID' => $name
+                'itemFormElID' => $name,
             ],
             'processedTca' => [
                 'columns' => [
@@ -148,8 +146,8 @@ class CrowdinToolbarItem implements ToolbarItemInterface
                             'readOnly' => false,
                         ],
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
 
         if ($this->typo3Version >= 13) {
@@ -216,8 +214,7 @@ class CrowdinToolbarItem implements ToolbarItemInterface
     protected function getSpriteIcon(
         string $iconName,
         ?string $alternativeMarkupIdentifier = null
-    ): string
-    {
+    ): string {
         $iconSize = $this->typo3Version >= 13
             ? \TYPO3\CMS\Core\Imaging\IconSize::SMALL
             : \TYPO3\CMS\Core\Imaging\Icon::SIZE_SMALL;

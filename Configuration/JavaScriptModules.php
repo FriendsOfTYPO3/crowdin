@@ -1,4 +1,5 @@
 <?php
+
 return [
     'dependencies' => ['core', 'backend'],
     'imports' => [

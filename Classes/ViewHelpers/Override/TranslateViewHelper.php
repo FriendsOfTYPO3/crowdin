@@ -7,7 +7,6 @@ namespace FriendsOfTYPO3\Crowdin\ViewHelpers\Override;
 use FriendsOfTYPO3\Crowdin\Traits\ConfigurationOptionsTrait;
 use FriendsOfTYPO3\Crowdin\UserConfiguration;
 use FriendsOfTYPO3\Crowdin\Xclass\LanguageServiceXclassed;
-use http\Client\Curl\User;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Localization\LanguageService;
@@ -69,7 +68,7 @@ class TranslateViewHelper extends AbstractViewHelper
             $id = $key;
         }
 
-        if ((string) $id === '') {
+        if ((string)$id === '') {
             throw new Exception('An argument "key" or "id" has to be provided', 1351584844);
         }
 

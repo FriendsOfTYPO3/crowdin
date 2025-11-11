@@ -1,66 +1,72 @@
 {
-	"name": "friendsoftypo3/crowdin",
-	"type": "typo3-cms-extension",
-	"description": "Crowdin integration for TYPO3",
-	"keywords": [
-		"TYPO3",
-		"extension",
-		"crowdin",
-		"localization",
-		"translation"
-	],
-	"homepage": "https://typo3.org",
-	"support": {
-		"chat": "https://typo3.org/help/",
-		"docs": "https://docs.typo3.org/p/friendsoftypo3/crowdin/main/en-us/",
-		"issues": "https://github.com/FriendsOfTYPO3/crowdin/issues",
-		"source": "https://github.com/FriendsOfTYPO3/crowdin"
-	},
-	"authors": [
-		{
-			"name": "TYPO3 Localization Team",
-			"email": "localization@typo3.org",
-			"role": "Developer"
-		}
-	],
-	"license": [
-		"GPL-2.0-or-later"
-	],
-	"require": {
-		"php": ">= 8.1.0, <= 8.4.99",
-		"typo3/cms-core": "^11 || ^12 || ^13"
-	},
-	"require-dev": {
-		"phpunit/phpunit": "^10.5"
-	},
-	"autoload": {
-		"psr-4": {
-			"FriendsOfTYPO3\\Crowdin\\": "Classes/"
-		}
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"FriendsOfTYPO3\\Crowdin\\Tests\\": "Tests/"
-		}
-	},
-	"extra": {
-		"branch-alias": {
-			"dev-main": "3.1.x-dev"
-		},
-		"typo3/cms": {
-			"web-dir": ".Build/public",
-			"extension-key": "crowdin"
-		}
-	},
-	"config": {
-		"allow-plugins": {
-			"typo3/cms-composer-installers": true,
-			"typo3/class-alias-loader": true
-		},
+    "name": "friendsoftypo3/crowdin",
+    "type": "typo3-cms-extension",
+    "description": "Crowdin integration for TYPO3",
+    "keywords": [
+        "TYPO3",
+        "extension",
+        "crowdin",
+        "localization",
+        "translation"
+    ],
+    "homepage": "https://typo3.org",
+    "support": {
+        "chat": "https://typo3.org/help/",
+        "docs": "https://docs.typo3.org/p/friendsoftypo3/crowdin/main/en-us/",
+        "issues": "https://github.com/FriendsOfTYPO3/crowdin/issues",
+        "source": "https://github.com/FriendsOfTYPO3/crowdin"
+    },
+    "authors": [
+        {
+            "name": "TYPO3 Localization Team",
+            "email": "localization@typo3.org",
+            "role": "Developer"
+        }
+    ],
+    "license": [
+        "GPL-2.0-or-later"
+    ],
+    "require": {
+        "php": ">= 8.1.0, <= 8.4.99",
+        "typo3/cms-core": "^11 || ^12 || ^13"
+    },
+    "require-dev": {
+        "ergebnis/composer-normalize": "^2.44",
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^10.5",
+        "typo3/coding-standards": "^0.8",
+		"typo3/testing-framework": "^8.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "FriendsOfTYPO3\\Crowdin\\": "Classes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "FriendsOfTYPO3\\Crowdin\\Tests\\": "Tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "3.1.x-dev"
+        },
+        "typo3/cms": {
+            "app-dir": ".Build",
+            "extension-key": "crowdin",
+            "web-dir": ".Build/public"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true,
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true
+        },
         "bin-dir": ".Build/bin",
         "vendor-dir": ".Build/vendor"
     },
-	"scripts": {
-		"ci:tests:unit": "phpunit -c Tests/phpunit.xml.dist"
-	}
+    "scripts": {
+        "ci:tests:unit": "phpunit -c Tests/phpunit.xml.dist"
+    }
 }

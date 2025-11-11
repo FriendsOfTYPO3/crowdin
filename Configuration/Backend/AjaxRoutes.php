@@ -1,4 +1,5 @@
 <?php
+
 use FriendsOfTYPO3\Crowdin\Backend\ToolbarItems\CrowdinToolbarItem;
 
 /**
@@ -7,10 +8,10 @@ use FriendsOfTYPO3\Crowdin\Backend\ToolbarItems\CrowdinToolbarItem;
 return [
     'crowdin_toggletranslation' => [
         'path' => '/menu/crowdin/translation/toggle',
-        'target' => CrowdinToolbarItem::class . '::toggleTranslationMode'
+        'target' => CrowdinToolbarItem::class . '::toggleTranslationMode',
     ],
     'crowdin_setextension' => [
         'path' => 'menu/crowdin/extension/set',
-        'target' => CrowdinToolbarItem::class . '::setCurrentExtension'
+        'target' => CrowdinToolbarItem::class . '::setCurrentExtension',
     ],
 ];

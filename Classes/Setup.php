@@ -15,7 +15,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class Setup
 {
-
     public function enable(): void
     {
         $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);

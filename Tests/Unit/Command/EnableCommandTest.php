@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace FriendsOfTYPO3\Crowdin\Tests\Unit\Command;
 
 use FriendsOfTYPO3\Crowdin\Command\EnableCommand;

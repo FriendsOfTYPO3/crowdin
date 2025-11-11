@@ -7,7 +7,6 @@ namespace FriendsOfTYPO3\Crowdin;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * This file is part of the "crowdin" Extension for TYPO3 CMS.
@@ -28,7 +27,7 @@ class ConfigurationLoader
         $data = $cache->get($identifier);
         if (!$data) {
             $data = [];
-            $list = json_decode((string) GeneralUtility::getUrl('https://localize.typo3.org/xliff/status.json'), true);
+            $list = json_decode((string)GeneralUtility::getUrl('https://localize.typo3.org/xliff/status.json'), true);
             foreach ($list['projects'] ?? [] as $project) {
                 if ($project['extensionKey'] === 'typo3-cms' || !($project['usable'] ?? false)) {
                     continue;

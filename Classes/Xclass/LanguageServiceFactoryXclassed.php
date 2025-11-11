@@ -6,15 +6,11 @@ namespace FriendsOfTYPO3\Crowdin\Xclass;
 
 use FriendsOfTYPO3\Crowdin\Traits\ConfigurationOptionsTrait;
 use TYPO3\CMS\Core\Authentication\AbstractUserAuthentication;
-use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Localization\Locale;
-use TYPO3\CMS\Core\Localization\Locales;
-use TYPO3\CMS\Core\Localization\LocalizationFactory;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class LanguageServiceFactoryXclassed extends LanguageServiceFactory
 {
@@ -44,9 +40,9 @@ class LanguageServiceFactoryXclassed extends LanguageServiceFactory
             }
             if ((new Typo3Version())->getMajorVersion() >= 12) {
                 return $this->create($this->locales->createLocale($user->user['lang'] ?? ''));
-            } else {
-                return $this->create($user->user['lang'] ?? '');
             }
+            return $this->create($user->user['lang'] ?? '');
+
         }
         return $this->create('en');
     }
