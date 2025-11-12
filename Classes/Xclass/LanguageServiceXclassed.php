@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FriendsOfTYPO3\Crowdin\Xclass;
 
 use FriendsOfTYPO3\Crowdin\UserConfiguration;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -81,6 +82,8 @@ class LanguageServiceXclassed extends LanguageService
         if (!is_string($path)) {
             return;
         }
+        $typo3Version = (new Typo3Version())->getMajorVersion();
+
         $this->loadUserConfiguration();
         if ($this->userConfiguration->usedForCore) {
             $isCoreExt = false;
@@ -92,13 +95,18 @@ class LanguageServiceXclassed extends LanguageService
             if ($isCoreExt) {
                 $this->lang = 't3';
             } else {
-                $this->lang = 'default';
+                $this->lang = $typo3Version >= 14 ? 'en' : 'default';
             }
         } elseif ($this->userConfiguration->crowdinIdentifier) {
-            if (str_contains($path, 'EXT:' . $this->userConfiguration->extensionKey)) {
+            $useT3 = str_contains($path, 'EXT:' . $this->userConfiguration->extensionKey);
+            if (!$useT3 && $typo3Version >= 14) {
+                // TYPO3 v14 is using a <domain>.<key> syntax as well (e.g., in Frontend)
+                $useT3 = str_starts_with($path, $this->userConfiguration->extensionKey . '.');
+            }
+            if ($useT3) {
                 $this->lang = 't3';
             } else {
-                $this->lang = 'default';
+                $this->lang = $typo3Version >= 14 ? 'en' : 'default';
             }
         }
     }
