@@ -17,9 +17,9 @@ final class EnableCommandTest extends TestCase
     #[Test]
     public function setUp(): void
     {
-        $setupMock = self::createMock(Setup::class);
+        $setupMock = $this->createMock(Setup::class);
         $setupMock
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('enable');
 
         $command = new EnableCommand($setupMock);
