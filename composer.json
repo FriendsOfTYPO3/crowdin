@@ -28,7 +28,7 @@
     ],
     "require": {
         "php": ">= 8.1.0, <= 8.5.99",
-        "typo3/cms-core": "^11 || ^12 || ^13"
+        "typo3/cms-core": "^12 || ^13"
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.44",
@@ -49,7 +49,8 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "3.1.x-dev"
+            "dev-main": "4.0.x-dev",
+            "dev-3.x": "3.1.x-dev"
         },
         "typo3/cms": {
             "app-dir": ".Build",

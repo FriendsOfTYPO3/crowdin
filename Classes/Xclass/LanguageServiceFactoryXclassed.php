@@ -24,11 +24,7 @@ class LanguageServiceFactoryXclassed extends LanguageServiceFactory
     public function create(Locale|string $locale): LanguageService
     {
         $obj = new LanguageServiceXclassed($this->locales, $this->localizationFactory, $this->runtimeCache);
-        if ((new Typo3Version())->getMajorVersion() >= 12) {
-            $obj->init($locale instanceof Locale ? $locale : $this->locales->createLocale($locale));
-        } else {
-            $obj->init($locale);
-        }
+        $obj->init($locale instanceof Locale ? $locale : $this->locales->createLocale($locale));
         return $obj;
     }
 
@@ -38,10 +34,7 @@ class LanguageServiceFactoryXclassed extends LanguageServiceFactory
             if ($user && static::getConfigurationOption('enable', '0') === '1') {
                 $user->user['lang'] = 't3';
             }
-            if ((new Typo3Version())->getMajorVersion() >= 12) {
-                return $this->create($this->locales->createLocale($user->user['lang'] ?? ''));
-            }
-            return $this->create($user->user['lang'] ?? '');
+            return $this->create($this->locales->createLocale($user->user['lang'] ?? ''));
 
         }
         return $this->create('en');

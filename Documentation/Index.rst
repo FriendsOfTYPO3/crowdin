@@ -76,7 +76,7 @@ the backend.
     friendsoftypo3/crowdin
 
 :Version:
-    3.1
+    4.0
 
 :Language:
     en

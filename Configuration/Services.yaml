@@ -7,11 +7,10 @@ services:
   FriendsOfTYPO3\Crowdin\:
     resource: '../Classes/*'
     # glob for services that have been previously available as
-    # container entries and have been removed in the mean time
+    # container entries and have been removed in the meantime
     # (e.g. because factories are to be used instead)
     exclude: '../Classes/{Xclass/LanguageServiceXclassed.php}'
 
-  # Required for TYPO3 v11
   FriendsOfTYPO3\Crowdin\Backend\ToolbarItems\CrowdinToolbarItem:
     public: true
 

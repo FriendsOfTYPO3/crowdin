@@ -32,16 +32,12 @@ class CrowdinToolbarItem implements ToolbarItemInterface
     ) {
         $this->typo3Version = (new Typo3Version())->getMajorVersion();
 
-        if ($this->typo3Version >= 12) {
-            $this->pageRenderer->getJavaScriptRenderer()->addJavaScriptModuleInstruction(
-                JavaScriptModuleInstruction::create('@friendsoftypo3/crowdin/toolbar.js')
-                    ->invoke('create', [
-                        // options go here...
-                    ])
-            );
-        } else {
-            $this->pageRenderer->loadRequireJsModule('TYPO3/CMS/Crowdin/Toolbar/CrowdinMenu');
-        }
+        $this->pageRenderer->getJavaScriptRenderer()->addJavaScriptModuleInstruction(
+            JavaScriptModuleInstruction::create('@friendsoftypo3/crowdin/toolbar.js')
+                ->invoke('create', [
+                    // options go here...
+                ])
+        );
     }
 
     public function checkAccess(): bool
@@ -69,49 +65,30 @@ class CrowdinToolbarItem implements ToolbarItemInterface
             $icon = isset($extension['icon'])
                 ? '<img src="' . htmlspecialchars($extension['icon']) . '" alt="' . htmlspecialchars($extension['name']) . '" style="width:16px">'
                 : $this->getSpriteIcon($extension['iconIdentifier']);
-            if ($this->typo3Version >= 12) {
-                $entries[] = '<li' . ($extension['active'] ? ' style="background:#6DAAE0"' : '') . '>';
-                $entries[] = '  <a href="#" class="crowdin-extension dropdown-item" role="menuitem" data-extension="' . $extension['key'] . '">';
-                $entries[] = '    <span class="dropdown-item-columns">';
-                $entries[] = '      <span class="dropdown-item-column dropdown-item-column-icon" aria-hidden="true">' .
-                    $icon . '</span>';
-                $entries[] = '      <span class="dropdown-item-column dropdown-item-column-title">' .
-                    htmlspecialchars($extension['name']) . '</span>';
-                $entries[] = '    </span>';
-                $entries[] = '  </a>';
-                $entries[] = '</li>';
-            } else {
-                $entries[] = '<div class="dropdown-table-row' . ($extension['active'] ? ' bg-primary' : '') . '">';
-                $entries[] = '  <div class="dropdown-table-column dropdown-table-column-top dropdown-table-icon">';
-                $entries[] = $icon;
-                $entries[] = '  </div>';
-                $entries[] = '  <div class="dropdown-table-column">';
-                $entries[] = '<a href="#" class="crowdin-extension" data-extension="' . $extension['key'] . '">'
-                    . htmlspecialchars($extension['name']) . '</a>';
-                $entries[] = '  </div>';
-                $entries[] = '</div>';
-            }
+            $entries[] = '<li' . ($extension['active'] ? ' style="background:#6DAAE0"' : '') . '>';
+            $entries[] = '  <a href="#" class="crowdin-extension dropdown-item" role="menuitem" data-extension="' . $extension['key'] . '">';
+            $entries[] = '    <span class="dropdown-item-columns">';
+            $entries[] = '      <span class="dropdown-item-column dropdown-item-column-icon" aria-hidden="true">' .
+                $icon . '</span>';
+            $entries[] = '      <span class="dropdown-item-column dropdown-item-column-title">' .
+                htmlspecialchars($extension['name']) . '</span>';
+            $entries[] = '    </span>';
+            $entries[] = '  </a>';
+            $entries[] = '</li>';
         }
 
         $translationEnabled = static::getConfigurationOption('enable', '0') === '1';
         $enableCheckbox = $this->createToggleSwitch('crowdin_enable', $translationEnabled);
 
         $content = '';
-        if ($this->typo3Version >= 12) {
-            $content .= '<div class="float-end" style="width:30px;margin-top:3px">' . $enableCheckbox . '</div>';
-            $content .= '<p class="h3 dropdown-headline" id="crowdin-dropdown-headline">Crowdin</p>';
-            $content .= '<hr class="dropdown-divider" aria-hidden="true">';
-            $content .= '<nav class="t3js-crowdinmenu">';
-            $content .= '<ul class="dropdown-list" role="menu" aria-labelledby="crowdin-dropdown-headline">';
-            $content .= implode(LF, $entries);
-            $content .= '</ul>';
-            $content .= '</nav>';
-        } else {
-            $content .= '<div class="float-end" style="width:30px;">' . $enableCheckbox . '</div>';
-            $content .= '<h3 class="dropdown-headline">Crowdin</h3>';
-            $content .= '<hr />';
-            $content .= '<div class="dropdown-table">' . implode('', $entries) . '</div>';
-        }
+        $content .= '<div class="float-end" style="width:30px;margin-top:3px">' . $enableCheckbox . '</div>';
+        $content .= '<p class="h3 dropdown-headline" id="crowdin-dropdown-headline">Crowdin</p>';
+        $content .= '<hr class="dropdown-divider" aria-hidden="true">';
+        $content .= '<nav class="t3js-crowdinmenu">';
+        $content .= '<ul class="dropdown-list" role="menu" aria-labelledby="crowdin-dropdown-headline">';
+        $content .= implode(LF, $entries);
+        $content .= '</ul>';
+        $content .= '</nav>';
 
         return $content;
     }
@@ -173,7 +150,7 @@ class CrowdinToolbarItem implements ToolbarItemInterface
         // TYPO3 Core is always compatible with Crowdin
         $extensions['_'] = [
             'key' => 'typo3',
-            'name' => 'TYPO3 Core Extensions',  // TODO: translate!
+            'name' => 'TYPO3 Core Extensions',  // @todo translate!
             'iconIdentifier' => 'actions-brand-typo3',
             'active' => $extensionKey === 'typo3',
         ];
@@ -245,7 +222,7 @@ class CrowdinToolbarItem implements ToolbarItemInterface
     {
         $params = $request->getParsedBody();
         if ($params === null) {
-            // TODO: This happens in TYPO3 v12, understand the underlying issue
+            // @todo this happens in TYPO3 v12, understand the underlying issue
             $params = json_decode($request->getBody()->getContents(), true);
         }
 
@@ -263,7 +240,8 @@ class CrowdinToolbarItem implements ToolbarItemInterface
     public function setCurrentExtension(ServerRequestInterface $request): ResponseInterface
     {
         $params = $request->getParsedBody();
-        if ($params === null) {// TODO: This happens in TYPO3 v12, understand the underlying issue
+        if ($params === null) {
+            // @todo this happens in TYPO3 v12, understand the underlying issue
             $params = json_decode($request->getBody()->getContents(), true);
         }
 
