@@ -18,16 +18,24 @@ jobs:
             typo3-versions: '^12'
           - php-versions: '8.2'
             typo3-versions: '^13'
+          - php-versions: '8.2'
+            typo3-versions: '14.*.*@dev'
           - php-versions: '8.3'
             typo3-versions: '^12'
           - php-versions: '8.3'
             typo3-versions: '^13'
+          - php-versions: '8.3'
+            typo3-versions: '14.*.*@dev'
           - php-versions: '8.4'
             typo3-versions: '^12'
           - php-versions: '8.4'
             typo3-versions: '^13'
+          - php-versions: '8.4'
+            typo3-versions: '14.*.*@dev'
           - php-versions: '8.5'
             typo3-versions: '^13'
+          - php-versions: '8.5'
+            typo3-versions: '14.*.*@dev'
     steps:
       - name: Check out repository
         uses: actions/checkout@v5
@@ -53,7 +61,12 @@ jobs:
           composer require typo3/cms-core=${{ matrix.typo3-versions }} --no-progress --prefer-dist --optimize-autoloader
       - name: Run PHP linter
         run: |
-          find . -type f -name '*.php' ! -path "./.Build/*" -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
+          PHP_VERSION=$(php -r "echo PHP_VERSION_ID;")
+          if [[ $PHP_VERSION -ge 80200 ]]; then
+            find . -type f -name '*.php' ! -path "./.Build/*" -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
+          else
+            find . -type f -name '*.php' ! -path "./.Build/*" ! -path './*/V14/*' -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
+          fi
       - name: Run unit tests
         run: |
           .Build/bin/phpunit -c Tests/phpunit.xml.dist

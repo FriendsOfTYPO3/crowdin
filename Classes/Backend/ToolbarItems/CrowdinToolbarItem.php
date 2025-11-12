@@ -15,10 +15,12 @@ use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Information\Typo3Version;
+use TYPO3\CMS\Core\Package\PackageManager;
 use TYPO3\CMS\Core\Page\JavaScriptModuleInstruction;
 use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extensionmanager\Utility\ListUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
 
 class CrowdinToolbarItem implements ToolbarItemInterface
 {
@@ -28,7 +30,8 @@ class CrowdinToolbarItem implements ToolbarItemInterface
 
     public function __construct(
         private readonly PageRenderer $pageRenderer,
-        private readonly IconFactory $iconFactory
+        private readonly IconFactory $iconFactory,
+        private readonly PackageManager $packageManager
     ) {
         $this->typo3Version = (new Typo3Version())->getMajorVersion();
 
@@ -107,8 +110,6 @@ class CrowdinToolbarItem implements ToolbarItemInterface
                 'itemFormElValue' => $enabled ? 1 : 0,
                 'fieldConf' => [
                     'config' => [
-                        // "items" is needed for TYPO3 v11
-                        'items' => [],
                         'readOnly' => false,
                     ],
                 ],
@@ -166,12 +167,11 @@ class CrowdinToolbarItem implements ToolbarItemInterface
                 return !empty($languageFiles);
             });
 
-            $listUtility = GeneralUtility::makeInstance(ListUtility::class);
-            $availableExtensions = $listUtility->getAvailableExtensions();
+            $availableExtensions = $this->getAvailableExtensions();
             $thirdPartyExtensions = array_diff_key($availableExtensions, array_flip(LanguageServiceXclassed::CORE_EXTENSIONS));
 
             foreach ($thirdPartyExtensions as $extension) {
-                if (in_array($extension['key'], $compatibleExtensions)) {
+                if (in_array($extension['key'], $compatibleExtensions, true)) {
                     $extensions[$extension['key']] = [
                         'key' => $extension['key'],
                         'name' => $extension['title'],
@@ -253,5 +253,30 @@ class CrowdinToolbarItem implements ToolbarItemInterface
         return new JsonResponse([
             'success' => true,
         ]);
+    }
+
+    /**
+     * Largely inspired from @see \TYPO3\CMS\Extensionmanager\Utility\ListUtility::getAvailableExtensions())
+     */
+    private function getAvailableExtensions(): array
+    {
+        $availableExtensions = [];
+        foreach ($this->packageManager->getAvailablePackages() as $package) {
+            if (!$package->getPackageMetaData()->isExtensionType()) {
+                continue;
+            }
+            if ($this->typo3Version >= 13) {
+                $icon = $package->getPackageIcon();
+            } else {
+                $icon = ExtensionManagementUtility::getExtensionIcon($package->getPackagePath());
+            }
+            $extensionData = [
+                'key' => $package->getPackageKey(),
+                'icon' => $icon ? PathUtility::getAbsoluteWebPath($package->getPackagePath() . $icon) : '',
+                'title' => $package->getPackageMetaData()->getTitle(),
+            ];
+            $availableExtensions[$package->getPackageKey()] = $extensionData;
+        }
+        return $availableExtensions;
     }
 }

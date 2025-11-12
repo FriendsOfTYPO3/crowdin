@@ -60,13 +60,6 @@ the backend.
     Configuration/Index
     KnownProblems/Index
 
-..  Meta Menu
-
-..  toctree::
-    :hidden:
-
-    Sitemap
-
 ----
 
 :Extension key:
