@@ -28,7 +28,7 @@ Additional information
 ======================
 
 The ``enable`` command above writes the following information to
-:file:`LocalConfiguration.php` / :file:`settings.php`:
+:file:`config/system/settings.php`:
 
 ..  code-block:: php
 
@@ -37,6 +37,16 @@ The ``enable`` command above writes the following information to
         'f' => [
             'TYPO3\\CMS\\Fluid\\ViewHelpers',
             'TYPO3Fluid\\Fluid\\ViewHelpers',
-            'FriendsOfTYPO3\\Crowdin\\ViewHelpers\\Override',
+            'FriendsOfTYPO3\\Crowdin\\ViewHelpers\\Override\\V14',
         ],
     ];
+
+.. note::
+
+   If you are running TYPO3 v12 or v13, change
+
+   ``FriendsOfTYPO3\\Crowdin\\ViewHelpers\\Override\\V14``
+
+   into:
+
+   ``FriendsOfTYPO3\\Crowdin\\ViewHelpers\\Override\\V12``
