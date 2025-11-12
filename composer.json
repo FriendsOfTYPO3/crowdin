@@ -28,14 +28,16 @@
     ],
     "require": {
         "php": ">= 8.1.0, <= 8.5.99",
-        "typo3/cms-core": "^12 || ^13 || ^14.0.x-dev"
+        "typo3/cms-core": "^12 || ^13 || 14.*.*@dev"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require-dev": {
         "ergebnis/composer-normalize": "^2.44",
         "phpstan/phpstan": "^1.10",
-        "phpunit/phpunit": "^10.5",
+        "phpunit/phpunit": "^10.5 || ^11.2.5",
         "typo3/coding-standards": "^0.8",
-		"typo3/testing-framework": "^8.3"
+		"typo3/testing-framework": "^8.3 || ^9.2"
     },
     "autoload": {
         "psr-4": {
