@@ -110,8 +110,6 @@ class CrowdinToolbarItem implements ToolbarItemInterface
                 'itemFormElValue' => $enabled ? 1 : 0,
                 'fieldConf' => [
                     'config' => [
-                        // "items" is needed for TYPO3 v11
-                        'items' => [],
                         'readOnly' => false,
                     ],
                 ],
