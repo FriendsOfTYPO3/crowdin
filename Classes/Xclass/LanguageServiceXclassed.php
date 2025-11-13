@@ -63,13 +63,6 @@ class LanguageServiceXclassed extends LanguageService
         return parent::sL($input);
     }
 
-    protected function includeLanguageFileRaw($fileRef)
-    {
-        $this->reinitLanguage($fileRef);
-
-        return parent::includeLanguageFileRaw($fileRef);
-    }
-
     protected function readLLfile($fileRef): array
     {
         $this->reinitLanguage($fileRef);
