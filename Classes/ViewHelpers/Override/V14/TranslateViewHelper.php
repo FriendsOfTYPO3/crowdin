@@ -157,24 +157,31 @@ final class TranslateViewHelper extends AbstractViewHelper
             self::$userConfiguration = GeneralUtility::makeInstance(UserConfiguration::class);
         }
 
+        if (str_contains($extensionName, '.')) {
+            [$extensionName,] = explode('.', $extensionName, 2);
+        }
+
         if (self::$userConfiguration->usedForCore) {
-            $isCoreExt = false;
-            foreach (LanguageServiceXclassed::CORE_EXTENSIONS as $extension) {
-                if (str_contains($id, 'EXT:' . $extension)) {
-                    $isCoreExt = true;
+            $isCoreExt = in_array($extensionName, LanguageServiceXclassed::CORE_EXTENSIONS, true);
+            if (!$isCoreExt) {
+                foreach (LanguageServiceXclassed::CORE_EXTENSIONS as $extension) {
+                    if (str_contains($id, 'EXT:' . $extension)) {
+                        $isCoreExt = true;
+                        break;
+                    }
                 }
             }
             if ($isCoreExt) {
                 $locale = 't3';
             } else {
-                $locale = 'default';
+                $locale = 'en';
             }
         } elseif (self::$userConfiguration->crowdinIdentifier) {
             if ($extensionName === self::$userConfiguration->extensionKey
                 || str_contains($id, 'EXT:' . self::$userConfiguration->extensionKey)) {
                 $locale = 't3';
             } else {
-                $locale = 'default';
+                $locale = 'en';
             }
         }
 
