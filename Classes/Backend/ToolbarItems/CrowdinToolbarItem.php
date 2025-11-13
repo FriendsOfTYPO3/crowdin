@@ -139,7 +139,19 @@ class CrowdinToolbarItem implements ToolbarItemInterface
 
         $GLOBALS['TYPO3_CONF_VARS']['BE']['debug'] = $backupDebug;
 
-        return $result['html'];
+        if ($this->typo3Version >= 13) {
+            // We need to get rid of a "form-wizards-item-element" class that is useless and
+            // breaks or hand-crafted layout by enforcing a 120px minimum width (backend.css)
+            // for the toggle usually part of a TCA form
+            $checkboxHtml = str_replace('<div class="form-wizards-item-element">', '<div>', $result['html']);
+        } else {
+            // We need to get rid of a "form-wizards-element" class that is useless and
+            // breaks or hand-crafted layout by enforcing a 120px minimum width (backend.css)
+            // for the toggle usually part of a TCA form
+            $checkboxHtml = str_replace('<div class="form-wizards-element">', '<div>', $result['html']);
+        }
+
+        return $checkboxHtml;
     }
 
     protected function getExtensionsCompatibleWithCrowdin(): array
