@@ -7,6 +7,7 @@ namespace FriendsOfTYPO3\Crowdin\Xclass;
 use FriendsOfTYPO3\Crowdin\UserConfiguration;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Localization\Locales;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class LanguageServiceXclassed extends LanguageService
@@ -77,18 +78,34 @@ class LanguageServiceXclassed extends LanguageService
         }
         $typo3Version = (new Typo3Version())->getMajorVersion();
 
+        // TYPO3 v14 switched from "default" to "en" as default language, which makes more sense
+        $defaultLanguageCode = $typo3Version >= 14 ? 'en' : 'default';
+        $resetLanguageCode = null;
+
         $this->loadUserConfiguration();
         if ($this->userConfiguration->usedForCore) {
             $isCoreExt = false;
-            foreach (self::CORE_EXTENSIONS as $extension) {
-                if (str_contains($path, 'EXT:' . $extension)) {
-                    $isCoreExt = true;
+            $extensionName = null;
+            if ($typo3Version >= 14) {
+                if (!str_contains($path, ':') && str_contains($path, '.')) {
+                    // This looks like a domain string
+                    [$extensionName,] = explode('.', $path, 2);
+                }
+            }
+            if ($extensionName !== null) {
+                $isCoreExt = in_array($extensionName, self::CORE_EXTENSIONS, true);
+            } else {
+                foreach (self::CORE_EXTENSIONS as $extension) {
+                    if (str_contains($path, 'EXT:' . $extension)) {
+                        $isCoreExt = true;
+                        break;
+                    }
                 }
             }
             if ($isCoreExt) {
-                $this->lang = 't3';
+                $resetLanguageCode = 't3';
             } else {
-                $this->lang = $typo3Version >= 14 ? 'en' : 'default';
+                $resetLanguageCode = $defaultLanguageCode;
             }
         } elseif ($this->userConfiguration->crowdinIdentifier) {
             $useT3 = str_contains($path, 'EXT:' . $this->userConfiguration->extensionKey);
@@ -97,10 +114,15 @@ class LanguageServiceXclassed extends LanguageService
                 $useT3 = str_starts_with($path, $this->userConfiguration->extensionKey . '.');
             }
             if ($useT3) {
-                $this->lang = 't3';
+                $resetLanguageCode = 't3';
             } else {
-                $this->lang = $typo3Version >= 14 ? 'en' : 'default';
+                $resetLanguageCode = $defaultLanguageCode;
             }
+        }
+
+        // Actually reinitialize if needed
+        if ($resetLanguageCode !== null) {
+            $this->init($resetLanguageCode);
         }
     }
 
