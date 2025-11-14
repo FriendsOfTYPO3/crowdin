@@ -151,13 +151,13 @@ final class TranslateViewHelper extends AbstractViewHelper
         return null;
     }
 
-    private static function overrideLocale(Locale|string|null $locale, string $id, string $extensionName): Locale|string|null
+    private static function overrideLocale(Locale|string|null $locale, string $id, ?string $extensionName): Locale|string|null
     {
         if (!self::$userConfiguration) {
             self::$userConfiguration = GeneralUtility::makeInstance(UserConfiguration::class);
         }
 
-        if (str_contains($extensionName, '.')) {
+        if (!empty($extensionName) && str_contains($extensionName, '.')) {
             [$extensionName,] = explode('.', $extensionName, 2);
         }
 
