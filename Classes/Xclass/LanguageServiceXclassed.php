@@ -7,6 +7,7 @@ namespace FriendsOfTYPO3\Crowdin\Xclass;
 use FriendsOfTYPO3\Crowdin\UserConfiguration;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Localization\Locales;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class LanguageServiceXclassed extends LanguageService
