@@ -17,11 +17,9 @@ use TYPO3\CMS\Fluid\Core\Rendering\RenderingContext;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 final class TranslateViewHelper extends AbstractViewHelper
 {
-    use CompileWithRenderStatic;
     use ConfigurationOptionsTrait;
 
     /**
@@ -43,6 +41,21 @@ final class TranslateViewHelper extends AbstractViewHelper
         $this->registerArgument('languageKey', 'string', 'Language key ("da" for example) or "default" to use. Also a Locale object is possible. If empty, use current locale from the request.');
         // @deprecated will be removed in TYPO3 v13.0. Deprecation is triggered in LocalizationUtility
         $this->registerArgument('alternativeLanguageKeys', 'array', 'Alternative language keys if no translation does exist. Ignored in non-extbase context. Deprecated, will be removed in TYPO3 v13.0');
+    }
+
+    /**
+     * Default render method - simply calls renderStatic() with a
+     * prepared set of arguments.
+     *
+     * @return mixed Rendered result
+     */
+    public function render()
+    {
+        return static::renderStatic(
+            $this->arguments,
+            $this->buildRenderChildrenClosure(),
+            $this->renderingContext,
+        );
     }
 
     /**
