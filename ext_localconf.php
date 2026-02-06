@@ -13,6 +13,9 @@ $boot = static function () {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\TYPO3\CMS\Core\Localization\LanguageServiceFactory::class] = [
             'className' => \FriendsOfTYPO3\Crowdin\Xclass\V14\LanguageServiceFactoryXclassed::class,
         ];
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\TYPO3\CMS\Core\Localization\DateFormatter::class] = [
+            'className' => \FriendsOfTYPO3\Crowdin\Xclass\V14\DateFormatterXclassed::class,
+        ];
     } else {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\TYPO3\CMS\Core\Localization\LanguageServiceFactory::class] = [
             'className' => \FriendsOfTYPO3\Crowdin\Xclass\V12\LanguageServiceFactoryXclassed::class,
