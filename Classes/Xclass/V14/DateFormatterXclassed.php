@@ -7,7 +7,7 @@ namespace FriendsOfTYPO3\Crowdin\Xclass\V14;
 use TYPO3\CMS\Core\Localization\DateFormatter;
 use TYPO3\CMS\Core\Localization\Locale;
 
-class DateFormatterXclassed extends DateFormatter
+readonly class DateFormatterXclassed extends DateFormatter
 {
     public function format(mixed $date, string|int $format, string|Locale $locale): string
     {
