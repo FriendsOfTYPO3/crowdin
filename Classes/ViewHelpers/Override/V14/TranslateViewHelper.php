@@ -11,6 +11,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Localization\Locale;
 use TYPO3\CMS\Core\Localization\Locales;
 use TYPO3\CMS\Core\Localization\TranslationDomainMapper;
+use TYPO3\CMS\Core\Localization\TranslationDomainResolver;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface as ExtbaseRequestInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -84,10 +85,23 @@ final class TranslateViewHelper extends AbstractViewHelper
                     $possibleId
                 ] = explode(':', $id, 2);
                 $domainMapper = GeneralUtility::makeInstance(TranslationDomainMapper::class);
-                if ($domainMapper->isValidDomainName($possibleDomain) && $domainMapper->mapDomainToFileName($possibleDomain) !== $possibleDomain) {
-                    $extensionName = $possibleDomain;
-                    $id = $possibleId;
+                // Check if the TranslationDomainResolver class exists (TYPO3 v14.3.5+) (663745d)
+                // If it does, use it to validate the domain name. Otherwise, fall back to using the TranslationDomainMapper
+                if (class_exists(TranslationDomainResolver::class)) {
+                    $domainResolver = GeneralUtility::makeInstance(TranslationDomainResolver::class);
+                    if ($domainResolver->isValidDomainName($possibleDomain)
+                        && $domainMapper->mapDomainToFileName($possibleDomain) !== $possibleDomain) {
+                        $extensionName = $possibleDomain;
+                        $id = $possibleId;
+                    }
+                } else {
+                    if ($domainMapper->isValidDomainName($possibleDomain)
+                        && $domainMapper->mapDomainToFileName($possibleDomain) !== $possibleDomain) {
+                        $extensionName = $possibleDomain;
+                        $id = $possibleId;
+                    }
                 }
+
             } elseif ($request instanceof ExtbaseRequestInterface) {
                 $extensionName = $request->getControllerExtensionKey();
             } else {
