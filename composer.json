@@ -1,7 +1,7 @@
 {
 	"name": "friendsoftypo3/crowdin",
 	"type": "typo3-cms-extension",
-	"description": "Crowdin integration for TYPO3",
+	"description": "Crowdin - Crowdin integration for TYPO3",
 	"keywords": [
 		"TYPO3",
 		"extension",
