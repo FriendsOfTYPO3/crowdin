@@ -55,8 +55,12 @@
 			"dev-3.x": "3.1.x-dev"
 		},
 		"typo3/cms": {
-			"app-dir": ".Build",
 			"extension-key": "crowdin",
+			"version": "4.0.2-dev",
+			"Package": {
+				"providesPackages": {}
+			},
+			"app-dir": ".Build",
 			"web-dir": ".Build/public"
 		}
 	},
